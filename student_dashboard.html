@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: linear-gradient(-45deg, #74ebd5, #acb6e5, #e3f2fd, #dcedc8);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .dashboard {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .info {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        .info strong {
+            display: inline-block;
+            width: 180px;
+            color: #333;
+        }
+
+        ul.attendance-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul.attendance-list li {
+            padding: 5px 0;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            margin-top: 10px;
+        }
+
+        .links {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
+
+    <div class="dashboard">
+        <h2>Welcome, {{ student_name }}</h2>
+
+        <div class="info">
+            <p><strong>Roll Number:</strong> {{ roll_number }}</p>
+            <p><strong>Mess Dues:</strong> ₹{{ mess_dues }}</p>
+
+            <h3>Monthly Attendance</h3>
+            <ul class="attendance-list">
+                {% for month, days in attendance_by_month.items() %}
+                    <li><strong>{{ month }}:</strong> {{ days }} days</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="scanner">
+            <h3>Scan to Pay</h3>
+            <img src="{{ url_for('static', filename='images/scanner.png') }}" alt="QR Code">
+        </div>
+
+        <div class="links">
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('home') }}">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>

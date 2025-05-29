@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .student-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .student-list li {
+            padding: 8px;
+            background-color: #f4f4f4;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .student-list form {
+            display: inline;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-home a {
+            color: #3498db;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-home a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <!-- Attendance Entry Section -->
+    <form method="POST" action="{{ url_for('update_attendance') }}">
+        <h3>Enter Attendance for This Month</h3>
+        <label for="month">Month (e.g. May 2025):</label>
+        <input type="text" name="month" required>
+
+        {% for student in students_for_attendance %}
+            <label>{{ student[0] }} - {{ student[1] }}</label>
+            <input type="number" name="attendance_{{ student[0] }}" min="0" max="31">
+        {% endfor %}
+        <button type="submit">Submit Attendance</button>
+    </form>
+
+    <!-- Add New Student -->
+    <form method="POST" action="{{ url_for('add_student') }}">
+        <h3>Add New Student</h3>
+        <label for="roll_number">Roll Number:</label>
+        <input type="text" name="roll_number" required>
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+
+        <label for="batch">Batch (e.g., 2023):</label>
+        <input type="text" name="batch" required>
+
+        <button type="submit">Add Student</button>
+    </form>
+
+    <!-- Delete Student Section -->
+    <form method="GET" action="{{ url_for('admin_dashboard') }}">
+        <h3>View/Remove Students by Batch</h3>
+        <label for="batch">Select Batch:</label>
+        <select name="batch" onchange="this.form.submit()">
+            <option value="">-- Select Batch --</option>
+            {% for b in batches %}
+                <option value="{{ b }}" {% if b == selected_batch %}selected{% endif %}>{{ b }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if students %}
+        <div class="student-list">
+            <ul>
+                {% for roll, name in students %}
+                    <li>
+                        {{ roll }} - {{ name }}
+                        <form method="POST" action="{{ url_for('delete_student') }}">
+                            <input type="hidden" name="roll_number" value="{{ roll }}">
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete {{ roll }}?')">Remove</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="back-home">
+        <a href="{{ url_for('home') }}">← Logout</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hostel Mess Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 12px 24px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #2980b9;
+        }
+
+        .content {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .content h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <img src="{{ url_for('static', filename='images/jntu_logo.png') }}" alt="JNTUH Logo" style="height: 100px;">
+        <div>
+            <h1 style="margin: 0;">Jawaharlal Nehru Technological University Hyderabad</h1>
+            <p style="margin: 0;">Sultanpur, Pulkal (M), Sangareddy (Dist)</p>
+            <p style="margin: 5px 0 0;">Smart way to manage your meals and mess dues</p>
+        </div>
+    </div>
+</header>
+
+
+<nav>
+    <a href="{{ url_for('student_login') }}">Student Login</a>
+    <a href="{{ url_for('admin_login') }}">Admin Login</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<div class="content">
+    <h2>Welcome to the Hostel Mess Portal</h2>
+    <p>This platform helps students and admins manage mess attendance, billing, and payments easily.</p>
+
+    <div class="info">
+        <div class="card">
+            <h3>For Students</h3>
+            <p>Login to view your attendance, monthly mess fee, and scan to pay via QR code.</p>
+        </div>
+        <div class="card">
+            <h3>For Admins</h3>
+            <p>Login to update student attendance, calculate dues, and generate reports.</p>
+        </div>
+        <div class="card">
+            <h3>Real-time Tracking</h3>
+            <p>Instant access to your mess details from any device, anytime.</p>
+        </div>
+    </div>
+</div>
+
+<footer id="contact">
+    <p>Contact: hosteladmin@college.edu | +91-9100439695,+91-9014385041</p>
+</footer>
+
+</body>
+</html>
