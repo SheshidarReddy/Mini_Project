@@ -106,8 +106,23 @@
     <!-- Attendance Entry Section -->
     <form method="POST" action="{{ url_for('update_attendance') }}">
         <h3>Enter Attendance for This Month</h3>
-        <label for="month">Month (e.g. May 2025):</label>
-        <input type="text" name="month" required>
+        <label for="month">Select Month:</label>
+        <select name="month" required>
+            <option value="" disabled selected>-- Select Month --</option>
+            <option value="January 2025">January </option>
+            <option value="February 2025">February </option>
+            <option value="March 2025">March </option>
+            <option value="April 2025">April </option>
+            <option value="May 2025">May </option>
+            <option value="June 2025">June</option>
+            <option value="July 2025">July</option>
+            <option value="August 2025">August </option>
+            <option value="September 2025">September</option>
+            <option value="October 2025">October </option>
+            <option value="November 2025">November</option>
+            <option value="December 2025">December</option>
+
+        </select>
 
         {% for student in students_for_attendance %}
             <label>{{ student[0] }} - {{ student[1] }}</label>
