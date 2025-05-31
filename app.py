@@ -93,9 +93,7 @@ def student_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
         student = Student.query.filter_by(roll_number=username).first()
-        
         if student and check_password_hash(student.password, password):
             session['user_type'] = 'student'
             session['roll_number'] = username
@@ -103,7 +101,6 @@ def student_login():
             return redirect(url_for('student_dashboard'))
         else:
             flash('Invalid credentials')
-            
     return render_template('student_login.html')
 
 @app.route('/admin_login', methods=['GET', 'POST'])
